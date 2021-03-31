@@ -1,4 +1,5 @@
 package ru.netology;
+
 import com.github.javafaker.Faker;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
@@ -9,8 +10,9 @@ import java.util.Locale;
 
 import static io.restassured.RestAssured.given;
 
-public class GeneratorData {
-    private static RequestSpecification request = new RequestSpecBuilder()
+ class GeneratorData {
+
+    public static RequestSpecification request = new RequestSpecBuilder()
             .setBaseUri("http://localhost")
             .setPort(9999)
             .setAccept(ContentType.JSON)
@@ -18,7 +20,7 @@ public class GeneratorData {
             .log(LogDetail.ALL)
             .build();
 
-    static void RegUser(User regDto) {
+    static void regUser(User regDto) {
         given()
                 .spec(request)
                 .body(regDto)
@@ -35,7 +37,7 @@ public class GeneratorData {
                 faker.internet().password(),
                 "active"
         );
-        RegUser(validUser);
+        regUser(validUser);
         return validUser;
     }
 
@@ -46,7 +48,7 @@ public class GeneratorData {
                 faker.internet().password(),
                 "blocked"
         );
-        RegUser(blockedUser);
+        regUser(blockedUser);
         return blockedUser;
     }
 
@@ -58,7 +60,7 @@ public class GeneratorData {
                 password,
                 "active"
         );
-        RegUser(invalidLogin);
+        regUser(invalidLogin);
         return new User("badLogin", password, "active");
     }
 
@@ -70,7 +72,7 @@ public class GeneratorData {
                 "correctPassword",
                 "active"
         );
-        RegUser(badPassword);
+        regUser(badPassword);
         return new User(userName, "badPassword", "active");
     }
 
